@@ -7,15 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @MappedSuperclass
 public class BaseModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	
 	private long createdBy;
 	private long updatedBy;
+	@CreationTimestamp
 	private Timestamp createdDate;
+	@UpdateTimestamp
 	private Timestamp updateDate;
 	private boolean isActive;
 
