@@ -8,8 +8,6 @@ package com.merp.server.service;
 import com.merp.server.TestUtils;
 import com.merp.server.model.Patient;
 import com.merp.server.repository.PatientRepository;
-import java.sql.Date;
-import java.time.LocalDate;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import org.junit.Assert;

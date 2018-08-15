@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-//    @Inject
-//    private ApplicationUserRepository applicationUserRepository;
     private UserRepository userRepository;
-//    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserController(UserRepository userRepository,
