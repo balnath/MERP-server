@@ -16,7 +16,6 @@ public class BaseModel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	
 	private long createdBy;
 	private long updatedBy;
 	@CreationTimestamp

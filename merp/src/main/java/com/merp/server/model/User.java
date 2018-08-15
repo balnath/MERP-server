@@ -6,9 +6,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "users")
 public class User extends BaseModel {
 
 	private String name;
@@ -20,7 +22,7 @@ public class User extends BaseModel {
 	private String mobileNo;
 	private Date dateOfBirth;
 	private Date dateOfJoining;
-	@OneToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Role role;
 	
 	public String getName() {
