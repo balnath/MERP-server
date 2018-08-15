@@ -13,6 +13,6 @@ public class MerpApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MerpApplication.class, args);
-		System.out.println("In Main method");
+//		System.out.println("In Main method");
 	}
 }

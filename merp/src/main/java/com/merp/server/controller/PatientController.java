@@ -33,8 +33,9 @@ public class PatientController {
 	}
 	
 	@GetMapping("/get")
-	public Patient getPatient(){
-		System.out.println("I am in controller");
-		return null;
+	public ResponseEntity<String> getPatient(){
+//		System.out.println("I am in controller");
+//		return null;
+                return new ResponseEntity<>("Some message", HttpStatus.OK);
 	}
 }
