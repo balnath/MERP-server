@@ -15,7 +15,7 @@ public class User extends BaseModel {
 
 	private String name;
 	@NotNull
-	private String userName;
+	private String username;
 	@NotNull
 	private String password;
 	private String email;
@@ -31,11 +31,11 @@ public class User extends BaseModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -67,6 +67,5 @@ public class User extends BaseModel {
 	public void setDateOfJoining(Date dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
 	}
-	
 	
 }
