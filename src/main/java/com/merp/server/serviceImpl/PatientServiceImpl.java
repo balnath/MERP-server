@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import com.merp.server.model.Patient;
 import com.merp.server.repository.PatientRepository;
 import com.merp.server.service.PatientService;
+import javax.inject.Inject;
 
 @Service
 @Transactional
 public class PatientServiceImpl implements PatientService {
-	@Autowired
+	@Inject
 	PatientRepository patienRepository;
 
 	@Override

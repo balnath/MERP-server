@@ -1,4 +1,4 @@
-package com.merp;
+package com.merp.server;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -22,7 +22,7 @@ public class BaseModel {
 	private Timestamp createdDate;
 	@UpdateTimestamp
 	private Timestamp updateDate;
-	private boolean isActive;
+	private boolean isActive = true;
 
 	public Long getId() {
 		return id;

@@ -23,8 +23,6 @@ public class PatientController {
 	PatientService patientService;
 
 	
-//	@RequestMapping(value= "/create", method= RequestMethod.POST)
-//	@ResponseBody
 	@PostMapping("/create")
 	public ResponseEntity<String> savePatientInfo(@Valid @RequestBody Patient patient) {
 		System.out.println("In controller");
@@ -34,8 +32,6 @@ public class PatientController {
 	
 	@GetMapping("/get")
 	public ResponseEntity<String> getPatient(){
-//		System.out.println("I am in controller");
-//		return null;
                 return new ResponseEntity<>("Some message", HttpStatus.OK);
 	}
 }
