@@ -72,5 +72,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(key)
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.getOutputStream().write((TOKEN_PREFIX + token).getBytes());
     }
 }
