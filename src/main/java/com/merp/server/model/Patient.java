@@ -1,8 +1,11 @@
 package com.merp.server.model;
 
 import java.sql.Date;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Patient extends BaseModel {
@@ -14,8 +17,11 @@ public class Patient extends BaseModel {
     private int age;
     private String emailId;
     private String mobileNo;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User assignedDoctor;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User receptionist;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Department department;
 
     public String getFirstName() {

@@ -24,6 +24,7 @@ public class User extends BaseModel {
     private Date dateOfJoining;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Role role;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Department department;
 
     public String getName() {
