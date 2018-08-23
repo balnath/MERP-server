@@ -11,5 +11,7 @@ public interface UserService {
 	public List<User> getUserList();
 	
 	public User getUserByName(String userName);
+        
+        public List<User> findUsersByRoleName(String roleName) throws Exception ;
 
 }

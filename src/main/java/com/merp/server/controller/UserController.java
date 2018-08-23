@@ -8,6 +8,7 @@ package com.merp.server.controller;
 import com.merp.server.model.User;
 import com.merp.server.repository.UserRepository;
 import com.merp.server.service.UserService;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
  
 /**
@@ -57,6 +60,16 @@ public class UserController {
         } catch (Exception e) {
             logger.error("An error occured while adding user !", e);
             return new ResponseEntity<>("An error occured while adding user !", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/get-users-by-role")
+    public ResponseEntity<List<User>> getUsersByRoleName(@RequestParam String roleName) {
+        try {
+            List<User> users  = userService.findUsersByRoleName(roleName);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching users by role : " + roleName, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)

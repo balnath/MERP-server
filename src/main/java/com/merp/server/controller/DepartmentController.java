@@ -37,7 +37,7 @@ public class DepartmentController {
         departmentService.saveDepartment(department);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/getDepartments")
+    @GetMapping("/get-all-departments")
     public List<Department> getAllDepartment(){
         logger.info("In get all deparment method");
         return departmentService.getAllDepartment();

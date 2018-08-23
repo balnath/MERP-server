@@ -21,7 +21,7 @@ public class PatientController {
 	PatientService patientService;
 
 	
-	@PostMapping("/create")
+	@PostMapping("/add-patient")
 	public ResponseEntity<String> savePatientInfo(@Valid @RequestBody Patient patient) {
 		System.out.println("In controller");
 		patientService.registerPatient(patient);

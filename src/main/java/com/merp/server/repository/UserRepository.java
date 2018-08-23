@@ -6,7 +6,10 @@
 package com.merp.server.repository;
 
 import com.merp.server.model.User;
+import java.util.List;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     User findByUsername(String username);
+    
+    @Query(value = "Select u from User u where u.role.name = :roleName")
+    List<User> findUsersByRoleName(@Param("roleName") String roleName);
 }

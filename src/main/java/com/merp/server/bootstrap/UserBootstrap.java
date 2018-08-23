@@ -5,7 +5,9 @@
  */
 package com.merp.server.bootstrap;
 
+import com.merp.server.model.Role;
 import com.merp.server.model.User;
+import com.merp.server.repository.RoleRepository;
 import com.merp.server.repository.UserRepository;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -24,6 +26,8 @@ public class UserBootstrap {
     @Inject
     UserRepository userRepository;
     @Inject
+    RoleRepository roleRepository;
+    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private static final Logger logger = LogManager.getLogger();
@@ -37,6 +41,14 @@ public class UserBootstrap {
                 user = new User();
                 user.setUsername("admin");
                 user.setPassword(bCryptPasswordEncoder.encode("password"));
+                Role adminRole = roleRepository.findByName("ADMIN");
+                if(adminRole == null) {
+                    adminRole = new Role();
+                    adminRole.setName("ADMIN");
+                    adminRole.setDescription("Description for ADMIN Role");
+                    roleRepository.save(adminRole);
+                }
+                user.setRole(adminRole);
                 userRepository.save(user);
                 logger.info("Admin user added successfully !");
             } else {
