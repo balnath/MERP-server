@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.merp.server.model.User user = userRepository.findByUsername(username);
+        com.merp.server.model.User user = userRepository.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

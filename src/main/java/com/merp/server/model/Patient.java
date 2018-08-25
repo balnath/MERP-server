@@ -16,6 +16,7 @@ public class Patient extends BaseModel {
     private int age;
     private String emailId;
     private String mobileNo;
+    private String registrationNo;
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignedDoctor;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -102,5 +103,15 @@ public class Patient extends BaseModel {
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+    public String getRegistrationNo() {
+        return registrationNo;
+    }
+
+    public void setRegistrationNo(String registrationNo) {
+        this.registrationNo = registrationNo;
+    }
+    
+    
 
 }

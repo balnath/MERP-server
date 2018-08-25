@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
- 
+
 /**
  *
  * @author Divyanshu
@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    
+
     private static final Logger logger = LogManager.getLogger();
 
     public UserController(UserRepository userRepository,
@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         try {
-            User foundUser = userRepository.findByUsername(user.getUsername());
+            User foundUser = userRepository.getUserByUsername(user.getUsername());
             if (foundUser == null) {
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userRepository.save(user);
@@ -63,17 +63,18 @@ public class UserController {
             return new ResponseEntity<>("An error occured while adding user !", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/get-users-by-role")
     public ResponseEntity<List<User>> getUsersByRoleName(@RequestParam String roleName) {
         try {
-            List<User> users  = userService.findUsersByRoleName(roleName);
+            List<User> users = userService.findUsersByRoleName(roleName);
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error occured while fetching users by role : " + roleName, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/get-users")
     public ResponseEntity<List<User>> getUsers() {
         try {
@@ -84,7 +85,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/get-user-by-id")
     public ResponseEntity<User> getUserById(@RequestParam long id) {
         try {
@@ -95,7 +96,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @PostMapping("/update-user")
     public ResponseEntity<String> updateUser(@Valid @RequestBody User user) {
         try {
@@ -114,9 +115,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/remove-user")
-    public ResponseEntity<String> removeUser (@RequestParam long id) {
+
+    @GetMapping("/remove-user") 
+    public ResponseEntity<String> removeUser(@RequestParam long id) {
         try {
             userService.removeUserById(id);
             return new ResponseEntity<>("User removed successfully ", HttpStatus.OK);
@@ -125,30 +126,30 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<String> login(@RequestBody User user) throws Exception {
-		User user2 = userService.getUserByName(user.getUsername());
-		try {
-			if (user2 != null && authenticate(user, user2)) {
-				return new ResponseEntity<>("User logged in Successfully !",  HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			System.out.println("Inside Exception");
-			e.printStackTrace();
-		}
-		return new ResponseEntity<>("Please enter correct credentials", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> login(@RequestBody User user) throws Exception {
+        User user2 = userService.getUserByName(user.getUsername());
+        try {
+            if (user2 != null && authenticate(user, user2)) {
+                return new ResponseEntity<>("User logged in Successfully !", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            System.out.println("Inside Exception");
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Please enter correct credentials", HttpStatus.BAD_REQUEST);
 
-	}
+    }
 
-	private boolean authenticate(User formUser, User dbUser) {
-		if (formUser.getUsername().equals(dbUser.getUsername())
-				&& formUser.getPassword().equals(dbUser.getPassword())) {
-			return true;
-		} else {
-			return false;
-		}
+    private boolean authenticate(User formUser, User dbUser) {
+        if (formUser.getUsername().equals(dbUser.getUsername())
+                && formUser.getPassword().equals(dbUser.getPassword())) {
+            return true;
+        } else {
+            return false;
+        }
 
-	}
+    }
 
 }

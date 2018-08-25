@@ -39,7 +39,7 @@ public class UserBootstrap {
     @PostConstruct
     public void initializeAdminUser() {
         try {
-            User user = userRepository.findByUsername("admin");
+            User user = userRepository.getUserByUsername("admin");
             if (user == null) {
                 logger.info("Adding admin user to database !!!");
                 user = new User();

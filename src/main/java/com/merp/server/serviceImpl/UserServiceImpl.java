@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     UserRepository userRepository;
-    
+
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUserList() {
         // TODO Auto-generated method stub
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAllActiveUsers();
     }
 
     @Override
     public User getUserByName(String userName) {
         // TODO Auto-generated method stub
-        User user = userRepository.findByUsername(userName);
+        User user = userRepository.getUserByUsername(userName);
         return user;
     }
 
@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(long id) throws Exception {
         try {
-            return userRepository.findById(id).get();
+            User user = userRepository.getUserById(id);
+            return user;
         } catch (Exception e) {
             logger.error("Could not retrieve User by id : " + id, e);
             throw new Exception("Could not retrieve User by id : " + id, e);
@@ -69,11 +70,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUserById(long id) throws Exception {
         try {
-            userRepository.deleteById(id);
+            User user = userRepository.getUserById(id);
+            user.setActive(false);
+            userRepository.save(user);
         } catch (Exception e) {
             logger.error("Error occured while deleting user with id : " + id, e);
             throw new Exception("Error occured while deleting user with id : " + id);
         }
     }
-    
+
 }

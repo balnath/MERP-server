@@ -4,5 +4,5 @@ import com.merp.server.model.Patient;
 
 public interface PatientService {
 
-	public void registerPatient(Patient patient);
+	public void registerPatient(Patient patient) throws Exception;
 }

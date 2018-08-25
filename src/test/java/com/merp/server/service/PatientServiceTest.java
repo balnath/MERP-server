@@ -31,7 +31,7 @@ public class PatientServiceTest {
     PatientRepository patientRepository;
     
     @Test
-    public void registerPatient(){
+    public void registerPatient() throws Exception {
         Patient patient = TestUtils.getPatient();
       
         patientService.registerPatient(patient);
