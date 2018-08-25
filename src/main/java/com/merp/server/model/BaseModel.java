@@ -13,7 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @MappedSuperclass
 public class BaseModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private long createdBy;
