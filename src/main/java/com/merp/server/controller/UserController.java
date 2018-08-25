@@ -9,6 +9,7 @@ import com.merp.server.model.User;
 import com.merp.server.repository.UserRepository;
 import com.merp.server.service.UserService;
 import java.util.List;
+import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,6 +73,59 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get-users")
+    public ResponseEntity<List<User>> getUsers() {
+        try {
+            List<User> users = userService.getUserList();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching all users", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/get-user-by-id")
+    public ResponseEntity<User> getUserById(@RequestParam long id) {
+        try {
+            User user = userService.getUserById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching all user with id : " + id, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/update-user")
+    public ResponseEntity<String> updateUser(@Valid @RequestBody User user) {
+        try {
+            User foundUser = userService.getUserById(user.getId());
+            foundUser.setName(user.getName());
+            foundUser.setEmail(user.getEmail());
+            foundUser.setMobileNo(user.getMobileNo());
+            foundUser.setDateOfBirth(user.getDateOfBirth());
+            foundUser.setDateOfJoining(user.getDateOfJoining());
+            foundUser.setRole(user.getRole());
+            foundUser.setDepartment(user.getDepartment());
+            userService.saveUser(user);
+            return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error occured while updating user with id : " + user.getId(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/remove-user")
+    public ResponseEntity<String> removeUser (@RequestParam long id) {
+        try {
+            userService.removeUserById(id);
+            return new ResponseEntity<>("User removed successfully ", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error occured while removing user with id : " + id, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody User user) throws Exception {
 		User user2 = userService.getUserByName(user.getUsername());

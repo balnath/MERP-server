@@ -23,8 +23,13 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(User user) throws Exception {
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            logger.error("Error occured while saving user", e);
+            throw new Exception("Error occured while saving user");
+        }
 
     }
 
@@ -51,4 +56,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User getUserById(long id) throws Exception {
+        try {
+            return userRepository.findById(id).get();
+        } catch (Exception e) {
+            logger.error("Could not retrieve User by id : " + id, e);
+            throw new Exception("Could not retrieve User by id : " + id, e);
+        }
+    }
+
+    @Override
+    public void removeUserById(long id) throws Exception {
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Error occured while deleting user with id : " + id, e);
+            throw new Exception("Error occured while deleting user with id : " + id);
+        }
+    }
+    
 }
