@@ -9,8 +9,11 @@ import com.merp.server.model.Department;
 import com.merp.server.model.Role;
 import com.merp.server.model.User;
 import com.merp.server.repository.DepartmentRepository;
+import com.merp.server.repository.PermissionRepository;
 import com.merp.server.repository.RoleRepository;
 import com.merp.server.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +31,8 @@ public class UserBootstrap {
     @Inject
     UserRepository userRepository;
     @Inject
+    PermissionRepository permissionRepository;
+     @Inject
     RoleRepository roleRepository;
     @Inject
     DepartmentRepository departmentRepository;
@@ -51,6 +56,7 @@ public class UserBootstrap {
                     adminRole = new Role();
                     adminRole.setName("ADMIN");
                     adminRole.setDescription("Description for ADMIN Role");
+                    adminRole.setPermissions(new HashSet<>(permissionRepository.findAll()));
                     roleRepository.save(adminRole);
                 }
                 user.setRole(adminRole);
