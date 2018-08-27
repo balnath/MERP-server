@@ -9,6 +9,7 @@ import com.merp.server.repository.PatientRepository;
 import com.merp.server.service.PatientService;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,4 +41,45 @@ public class PatientServiceImpl implements PatientService {
 
     }
 
+    @Override
+    public List<Patient> getAllPatients() throws Exception {
+        try {
+            return patienRepository.getAllPatients();
+        } catch (Exception e) {
+            logger.error("Error occured while fetching all patients", e);
+            throw new Exception("Error occured while fetching all patients");
+        }
+    }
+
+    @Override
+    public List<Patient> getPatientsByReceptionist(long receptionistId) throws Exception {
+        try {
+            return patienRepository.getPatientsByReceptionist(receptionistId);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching all patients having receptionist with id : "  + receptionistId, e);
+            throw new Exception("Error occured while fetching all patients having receptionist with id : "  + receptionistId);
+        }
+    }
+
+    @Override
+    public List<Patient> getPatientsByAssignedDoctor(long assignedDoctorId) throws Exception {
+        try {
+            return patienRepository.getPatientsByAssignedDoctor(assignedDoctorId);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching all patients having doctor with id : "  + assignedDoctorId, e);
+            throw new Exception("Error occured while fetching all patients having doctor with id : "  + assignedDoctorId);
+        }
+    }
+
+    @Override
+    public Patient getPatientById(long id) throws Exception {
+        try {
+            return patienRepository.getPatientById(id);
+        } catch (Exception e) {
+            logger.error("Error occured while fetching patient with id : "  + id, e);
+            throw new Exception("Error occured while fetching patient with id : "  + id);
+        }
+    }
+    
+    
 }

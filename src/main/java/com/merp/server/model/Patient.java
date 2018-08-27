@@ -15,7 +15,7 @@ public class Patient extends BaseModel {
     private Date dob;
     private int age;
     private String emailId;
-    private String mobileNo;
+    private String mobileNo;    
     private String registrationNo;
     @ManyToOne(fetch = FetchType.EAGER)
     private User assignedDoctor;

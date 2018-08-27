@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -126,30 +125,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody User user) throws Exception {
-        User user2 = userService.getUserByName(user.getUsername());
+    
+    @GetMapping("/get-user-details-by-username")
+    public ResponseEntity<User> getUserDetailsByUsername(@RequestParam String username) {
         try {
-            if (user2 != null && authenticate(user, user2)) {
-                return new ResponseEntity<>("User logged in Successfully !", HttpStatus.OK);
-            }
+            User user = userService.getUserByName(username);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println("Inside Exception");
-            e.printStackTrace();
+            logger.error("Error occured while fetching user details with username : " + username, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Please enter correct credentials", HttpStatus.BAD_REQUEST);
-
-    }
-
-    private boolean authenticate(User formUser, User dbUser) {
-        if (formUser.getUsername().equals(dbUser.getUsername())
-                && formUser.getPassword().equals(dbUser.getPassword())) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 
 }
